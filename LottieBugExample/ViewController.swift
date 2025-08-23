@@ -22,6 +22,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add background and foreground notifications.
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
         // Add lottie view
         view.addSubview(lottieView)
         NSLayoutConstraint.activate([
@@ -31,6 +35,16 @@ class ViewController: UIViewController {
         
         // Play lottie view
         lottieView.play()
+    }
+}
+ 
+extension ViewController {
+    @objc private func didEnterBackground() {
+        print(#function, "Is lottie animating? - \(lottieView.isAnimationPlaying)")
+    }
+    
+    @objc private func willEnterForeground() {
+        print(#function, "Is lottie animating? - \(lottieView.isAnimationPlaying)")
     }
 }
 
